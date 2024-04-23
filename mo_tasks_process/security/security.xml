@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="mo_group_task_project_manager_one" model="res.groups">
+        <field name="name"> Project Manager</field>
+    </record>
+
+    <record id="mo_group_task_project_supervisor_one" model="res.groups">
+        <field name="name"> Supervisor Task</field>
+    </record>
+
+
+</odoo>
