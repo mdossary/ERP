@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="mo_project_task_process_form" model="ir.ui.view">
+            <field name="name">project.task.process.form.mo</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="tracking_log" invisible="1"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page name="process_task_details_mo" string="Progress">
+                        <group>
+                            <field name="progress_widget" widget="progressbar" invisible="1"/>
+                            <field name="progress_widget" widget="progressbar" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="progress_widget" widget="progressbar" invisible="1"/>
+                            <field name="progress_widget" widget="progressbar"/>
+                        </group>
+                        <field name="process_line_ids">
+                            <tree editable="bottom" delete="0">
+
+                                <field name="date_process"  attrs="{'readonly': [('readonly_trigger', '=', True)]}"/>
+                                <field name="action_click"  invisible="1"/>
+                                <field name="if_user" invisible="1"/>
+                                <field name="if_manager" invisible="1"/>
+                                <field name="user_note_flag" invisible="1"/>
+                                <field name="readonly_trigger"  invisible="1"/>
+                                <field name="user_process" readonly="1" string="Supervisor Name"/>
+                                <field name="user_note" attrs="{'readonly': ['|',('if_user', '=', True),('readonly_trigger', '=', True)]}" string="Supervisor Description"/>
+                                <field name="rate" string="Progress %"  attrs="{'readonly': ['|',('if_user', '=', True),('readonly_trigger', '=', True)]}"/>
+                                <field name="manager_process" readonly="1" string="Manager Name"  groups="mo_tasks_process.mo_group_task_project_manager_one"/>
+                                 <field name="state"
+                                       widget="badge"
+                                       decoration-danger="state == 'not'" decoration-success="state == 'done'"
+                                />
+                                <field name="manager_note"  string="Manager Description" attrs="{'readonly': [('readonly_trigger', '=', True)]}" groups="mo_tasks_process.mo_group_task_project_manager_one"/>
+                                <field name="task_id" invisible="1"/>
+                                <button name="process_timesheet"
+                                        type="object"
+                                        string="Approve"
+                                        class="oe_highlight"
+                                        groups="mo_tasks_process.mo_group_task_project_manager_one"
+                                        attrs="{'invisible': [('action_click', '=', True)]}"/>
+
+                                <button name="reject_process"
+                                        type="object"
+                                        string="Reject"
+                                        class="btn-danger"
+                                        groups="mo_tasks_process.mo_group_task_project_manager_one"
+                                        attrs="{'invisible': [('action_click', '=', True)]}"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
