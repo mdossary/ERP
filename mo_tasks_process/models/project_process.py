@@ -131,8 +131,8 @@ class MoTaskProcess(models.Model):
         line_rate = rate / 100
         wt = self.task_id.x_studio_weight
         check = acc + (line_rate * wt)
-        total_rate = sum(self.task_id.process_line_ids.mapped('rate'))
-        if total_rate > 100:
+        total_rate = sum(self.task_id.process_line_ids.filtered(lambda line: line.state == 'done').mapped('rate'))
+        if total_rate > 100 or rate + total_rate > 100:
             self.appear_const()
         else:
             return check
