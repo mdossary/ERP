@@ -12,8 +12,14 @@
         'security/security.xml',
         # 'data/sequence_data.xml',
         'views/tasks_process.xml',
+        'views/report_template.xml',
         # 'views/safety_view_form.xml',
     ],
+    'assets': {
+        'web.report_assets_pdf': [
+            '/mo_tasks_process/static/src/scss/progress_style.css',
+        ],
+    },
     'application': True,
     'installable': True,
 }

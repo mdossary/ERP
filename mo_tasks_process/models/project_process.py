@@ -178,6 +178,9 @@ class ProjectTasksForm(models.Model):
         string='Progress',
         compute='_get_progress_widget',
         required=False)
+    process_widget_flag = fields.Float(
+        string='Progress',
+        required=False)
 
     @api.depends('x_studio_weight', 'process_line_ids')
     def _get_progress_widget(self):
@@ -187,3 +190,4 @@ class ProjectTasksForm(models.Model):
             for line in line_ids:
                 my_list.append(line.rate) if line.state == 'done' else 0
             widget.progress_widget = sum(my_list)
+            widget.process_widget_flag = widget.progress_widget

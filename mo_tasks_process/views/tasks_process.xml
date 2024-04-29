@@ -19,6 +19,7 @@
                         </group>
                         <group>
                             <field name="progress_widget" widget="progressbar" invisible="1"/>
+                            <field name="process_widget_flag" widget="progressbar" invisible="1"/>
                             <field name="progress_widget" widget="progressbar"/>
                         </group>
                         <field name="process_line_ids">

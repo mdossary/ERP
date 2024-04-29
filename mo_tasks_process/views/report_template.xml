@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="c" model="ir.actions.report">
+            <field name="name">PROJECT PROGRESS UPDATE</field>
+            <field name="model">project.update</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mo_tasks_process.report_update_process_main</field>
+            <field name="report_file">mo_tasks_process.report_update_process_main</field>
+            <field name="binding_model_id" ref="model_project_update"/>
+            <field name="paperformat_id" ref="studio_customization.a4_blank_landscape_f4153802-e073-4603-9722-65e5e095370c"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+        <template id="report_update_process_main">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-call="mo_tasks_process.report_header_update_process"/>
+                        <t t-call="mo_tasks_process.report_body_update_process"/>
+                        <t t-call="mo_tasks_process.report_new_progress_details"/>
+                    </t>
+                </div>
+            </t>
+        </template>
+        <template id="report_header_update_process">
+            <div class="page">
+                <div class="row bg-200">
+                    <div class="col-2" style="margin-top:5px">
+                        <span t-field="doc.project_id.x_avatar_image" t-options-widget="&quot;image&quot;" t-options-qweb_img_raw_data="1"/>
+                    </div>
+                    <div class="col-7 text-center h6 o_bold" style="margin-top:20px; margin-left: -20px;">
+                        <span t-field="doc.x_studio_project_name" class="o_bold"/>
+                    </div>
+                    <div class="col-3">
+                        <span t-field="doc.project_id.x_studio_company_logo" t-options-widget="&quot;image&quot;" t-options-qweb_img_raw_data="1"/>
+                    </div>
+                </div>
+                <div class="row text-o-color-1 bg-200">
+                    <div class="col text-center h6 o_bold" style="margin-top:20px;margin-bottom:40px; margin-left: -70px;">
+                        <span>PROJECT PROGRESS UPDATE</span>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px;margin-top:20px">
+                    <div class="col-3 h6 o_bold">
+                        <span>
+                            <strong>Project Start Date:</strong>
+                            <br/>
+                        </span>
+                        <span t-field="doc.project_id.date_start"/>
+                    </div>
+                    <div class="col-3 ">
+                        <span>
+                            <strong>Planned Completion Date:</strong>
+                            <br/>
+                        </span>
+                        <span t-field="doc.project_id.date"/>
+                    </div>
+                    <div class="col-3 ">
+                        <span>
+                            <strong>Report Date:</strong>
+                            <br/>
+                        </span>
+                        <span t-field="doc.date"/>
+                    </div>
+                    <div class="col-3 ">
+                        <span>
+                            <strong>Report No.:</strong>
+                            <br/>
+                        </span>
+                        <span t-field="doc.x_studio_report_no"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:20px;margin-top:20px">
+                    <div class="col-3 ">
+                        <span>
+                            <strong>Actual Progress %:</strong>
+                            <br/>
+                        </span>
+
+                        <span t-field="doc.project_id.x_studio_actual_wt" t-options-widget="&quot;float&quot;" t-options-precision="2"/>
+                    </div>
+                    <div class="col-3 ">
+                        <span>
+                            <strong>Planned Progress AOT %:</strong>
+                            <br/>Report Css green 2
+                        </span>
+                        <span t-field="doc.project_id.x_studio_planned_wt" t-options-widget="&quot;float&quot;" t-options-precision="2"/>
+                    </div>
+                    <div class="col-3 ">
+                        <span>
+                            <strong>Status:</strong>
+                            <br/>
+                        </span>
+                        <span t-field="doc.status"/>
+                    </div>
+                    <div class="col-3 "/>
+                </div>
+                <div class="row">
+                    <div class="col bg-o-color-2">
+                        <span>
+                            <br/>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="margin-top:20px;margin-bottom:20px">
+                        <span>
+                            <strong>Overall Status:</strong>
+                            <br/>
+                        </span>
+                        <span t-field="doc.x_studio_overall_status"/>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+            </div>
+            <div class="row" style="margin-top:20px;margin-bottom:20px">
+                <div class="col-6">
+                    <span>
+                        <strong>Safety:</strong>
+                        <br/>
+                    </span>
+                    <span t-field="doc.x_studio_safety"/>
+                </div>
+                <div class="col-6">
+                    <span>
+                        <strong>Tasks and Activities:</strong>
+                        <br/>
+                    </span>
+                    <span t-field="doc.x_studio_tasks_and_activities"/>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:20px;margin-top:20px">
+                <div class="col-6">
+                    <span>
+                        <strong>Challenges:</strong>
+                        <br/>
+                    </span>
+                    <span t-field="doc.x_studio_challenges"/>
+                </div>
+                <div class="col-6">
+                    <span>
+                        <strong>Any Other Items:</strong>
+                        <br/>
+                    </span>
+                    <span t-field="doc.x_studio_any_other_items"/>
+                </div>
+            </div>
+        </template>
+        <template id="report_body_update_process">
+            <div class="row">
+                <div class="col text-o-color-1 h4" style="margin-bottom:20px;margin-top:50px;margin-top:60px">
+                    <span>
+                       Project’s Progress</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <span t-field="doc.x_studio_s_curve" t-options-widget="&quot;image&quot;" t-options-qweb_img_raw_data="1"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col small bg-o-color-5">
+                    <span>
+                        <br/>
+                    </span>
+                </div>
+            </div>
+        </template>
+        <template id="report_new_progress_details">
+            <div class="col text-o-color-1 h4" style="margin-bottom:20px;margin-top:50px;margin-top:60px">
+                <span>
+                    Progress Details</span>
+            </div>
+            <table class="table o_report_block_table">
+                <thead style="background-color:#00008B;color:white;">
+                    <tr style="width:100%;">
+                        <th width="30%">
+                            <span>Task</span>
+                        </th>
+                        <th  width="20%">
+                            <span>Item Progress %</span>
+                        </th>
+                        <th class="text-start"  width="20%">Planned Completion Date</th>
+                        <th class="text-start" width="15%">
+                            <span>Actual Progress %</span>
+                        </th>
+                        <th class="text-start" width="15%">
+                            <span>Planned Progress %</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="border-0" >
+                    <tr t-foreach="doc.sort_by_subtask(doc.project_id.task_ids)" t-as="ta" >
+                        <t t-if="ta['condition']">
+                            <td class="g-200 fw-bold o_line_section'" style="background-color:#C0C0C0;color:black;">
+                                <span t-esc="ta['parent']"/>
+                            </td>
+                            <td class="g-200 fw-bold o_line_section'" style="background-color:#C0C0C0;color:black;">
+                                <div class="progress-bar-container">
+                                    <div class="progress-task-widget" t-att-style="'width: ' + str(ta['progress']) + '%;'">
+                                        <span class="text-center" t-esc="ta['progress'] " style="margin-right:140px"/>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="g-200 fw-bold o_line_section text-start'" style="background-color:#C0C0C0;color:black;">
+                                <span  class="text-center" t-esc="ta['planned_date_end']"/>
+                            </td>
+                            <td class="g-200 fw-bold o_line_section text-start'" style="background-color:#C0C0C0;color:black;">
+                                <span class="text-center"    t-esc="ta['x_studio_n_actual']"/>
+                            </td>
+                            <td class="g-200 fw-bold o_line_section text-start'" style="background-color:#C0C0C0;color:black;">
+                                <span  t-esc="ta['x_studio_n_planned']"/>
+                            </td>
+                        </t>
+                        <t t-else="">
+                            <td >
+                                <span t-esc="ta['parent']"/>
+                            </td>
+                            <td>
+                                <div class="progress-bar-container">
+                                    <div class="progress-task-widget" t-att-style="'width: ' + str(ta['progress']) + '%;'">
+                                        <span class="text-center" t-esc="ta['progress']" style="margin-right:140px"/>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-start">
+                                <span t-esc="ta['planned_date_end']"/>
+                            </td>
+                            <td class="text-start">
+                                <span t-esc="ta['x_studio_n_actual']"/>
+                            </td>
+                            <td  class="text-start">
+                                <span t-esc="ta['x_studio_n_planned']"/>
+                            </td>
+                        </t>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+            </div>
+            <br/>
+            <div class="row" style="margin-bottom:40px;margin-top:40px">
+                <div class="col text-o-color-1 h4">
+                    <span>Action Items' Status</span>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+            <table class="table o_report_block_table">
+                <tbody>
+                    <tr t-foreach="doc.x_studio_many2many_field_k5mgy" t-as="table_line">
+                        <td>
+                            <span t-field="table_line.display_name"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+            </div>
+            <table class="table o_report_block_table">
+                <thead>
+                    <tr>
+                        <th>
+                            <span>ID</span>
+                        </th>
+                        <th>Item</th>
+                        <th>
+                            <span>Notes</span>
+                        </th>
+                        <th>
+                            <span>Item Reference</span>
+                        </th>
+                        <th>
+                            <span>Due Date</span>
+                        </th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="doc.project_id.x_studio_action_items" t-as="table_line" >
+                        <td>
+                            <span t-field="table_line.id"/>
+                        </td>
+                        <td>
+                            <span t-field="table_line.display_name"/>
+                        </td>
+                        <td>
+                            <span t-field="table_line.x_studio_notes"/>
+                        </td>
+                        <td>
+                            <span t-field="table_line.x_studio_many2one_field_WuWiC.x_name"/>
+                        </td>
+                        <td>
+                            <span t-field="table_line.x_studio_due_date"/>
+                        </td>
+                        <td>
+                            <span t-field="table_line.x_studio_stage_id.display_name"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+
+    </data>
+</odoo>
