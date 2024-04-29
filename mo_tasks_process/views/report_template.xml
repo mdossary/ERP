@@ -177,24 +177,24 @@
             </div>
             <table class="table o_report_block_table">
                 <thead style="background-color:#00008B;color:white;">
-                    <tr>
-                        <th>
-                            <span>Name</span>
+                    <tr style="width:100%;">
+                        <th width="30%">
+                            <span>Task</span>
                         </th>
-                        <th>
+                        <th  width="20%">
                             <span>Item Progress %</span>
                         </th>
-                        <th>End Date</th>
-                        <th>
+                        <th class="text-start"  width="20%">End Date</th>
+                        <th class="text-start" width="15%">
                             <span>Actual Progress %</span>
                         </th>
-                        <th>
+                        <th class="text-start" width="15%">
                             <span>Planned Progress %</span>
                         </th>
                     </tr>
                 </thead>
                 <tbody class="border-0" >
-                    <tr t-foreach="doc.sort_by_subtask(doc.project_id.task_ids)" t-as="ta">
+                    <tr t-foreach="doc.sort_by_subtask(doc.project_id.task_ids)" t-as="ta" >
                         <t t-if="ta['condition']">
                             <td class="g-200 fw-bold o_line_section'" style="background-color:#C0C0C0;color:black;">
                                 <span t-esc="ta['parent']"/>
@@ -206,14 +206,14 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="g-200 fw-bold o_line_section'" style="background-color:#C0C0C0;color:black;">
-                                <span t-esc="ta['planned_date_end']"/>
+                            <td class="g-200 fw-bold o_line_section text-start'" style="background-color:#C0C0C0;color:black;">
+                                <span  class="text-center" t-esc="ta['planned_date_end']"/>
                             </td>
-                            <td class="g-200 fw-bold o_line_section'" style="background-color:#C0C0C0;color:black;">
-                                <span t-esc="ta['x_studio_n_actual']"/>
+                            <td class="g-200 fw-bold o_line_section text-start'" style="background-color:#C0C0C0;color:black;">
+                                <span class="text-center"    t-esc="ta['x_studio_n_actual']"/>
                             </td>
-                            <td class="g-200 fw-bold o_line_section'" style="background-color:#C0C0C0;color:black;">
-                                <span t-esc="ta['x_studio_n_planned']"/>
+                            <td class="g-200 fw-bold o_line_section text-start'" style="background-color:#C0C0C0;color:black;">
+                                <span  t-esc="ta['x_studio_n_planned']"/>
                             </td>
                         </t>
                         <t t-else="">
@@ -227,13 +227,13 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                            <td class="text-start">
                                 <span t-esc="ta['planned_date_end']"/>
                             </td>
-                            <td>
+                            <td class="text-start">
                                 <span t-esc="ta['x_studio_n_actual']"/>
                             </td>
-                            <td>
+                            <td  class="text-start">
                                 <span t-esc="ta['x_studio_n_planned']"/>
                             </td>
                         </t>
