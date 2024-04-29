@@ -184,7 +184,7 @@
                         <th  width="20%">
                             <span>Item Progress %</span>
                         </th>
-                        <th class="text-start"  width="20%">End Date</th>
+                        <th class="text-start"  width="20%">Planned Completion Date</th>
                         <th class="text-start" width="15%">
                             <span>Actual Progress %</span>
                         </th>
