@@ -1,4 +1,4 @@
-from odoo import fields, models, api, _
+from odoo import fields, models, tools, api, _
 from odoo.exceptions import ValidationError
 
 import datetime
@@ -178,9 +178,17 @@ class ProjectTasksForm(models.Model):
         string='Progress',
         compute='_get_progress_widget',
         required=False)
+
     process_widget_flag = fields.Float(
         string='Progress',
+        compute='_set_default_progress',
         required=False)
+
+    def _set_default_progress(self):
+        for rec in self:
+            rate = rec.process_line_ids.filtered(lambda line: line.state == 'done').mapped('rate')
+            action = sum(rate)
+            rec.process_widget_flag = action
 
     @api.depends('x_studio_weight', 'process_line_ids')
     def _get_progress_widget(self):
@@ -190,4 +198,3 @@ class ProjectTasksForm(models.Model):
             for line in line_ids:
                 my_list.append(line.rate) if line.state == 'done' else 0
             widget.progress_widget = sum(my_list)
-            widget.process_widget_flag = widget.progress_widget

@@ -35,7 +35,7 @@
                                 <field name="user_note" attrs="{'readonly': ['|',('if_user', '=', True),('readonly_trigger', '=', True)]}" string="Supervisor Description"/>
                                 <field name="rate" string="Progress %"  attrs="{'readonly': ['|',('if_user', '=', True),('readonly_trigger', '=', True)]}"/>
                                 <field name="manager_process" readonly="1" string="Manager Name"  groups="mo_tasks_process.mo_group_task_project_manager_one"/>
-                                 <field name="state"
+                                <field name="state"
                                        widget="badge"
                                        decoration-danger="state == 'not'" decoration-success="state == 'done'"
                                 />
@@ -59,6 +59,27 @@
                     </page>
 
                 </xpath>
+
+            </field>
+        </record>
+
+        <record id="progress_widget_inherited_view" model="ir.ui.view">
+            <field name="name">project.inherited.progress</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="hr_timesheet.view_task_tree2_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='progress'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='progress'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='progress']" position="after">
+                    <field name="process_widget_flag" widget="progressbar" string="Progress%"/>
+                </xpath>
+
+
 
             </field>
         </record>
