@@ -10,6 +10,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="tracking_log" invisible="1"/>
+                    <field name="parent_show" invisible="1"/>
+                    <field name="parent_flag" invisible="1"/>
                 </xpath>
                 <xpath expr="//notebook" position="inside">
                     <page name="process_task_details_mo" string="Progress">
@@ -22,7 +24,7 @@
                             <field name="process_widget_flag" widget="progressbar" invisible="1"/>
                             <field name="progress_widget" widget="progressbar"/>
                         </group>
-                        <field name="process_line_ids">
+                        <field name="process_line_ids" attrs="{'invisible': [('parent_flag', '!=', True)]}">
                             <tree editable="bottom" delete="0">
 
                                 <field name="date_process"  attrs="{'readonly': [('readonly_trigger', '=', True)]}"/>

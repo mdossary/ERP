@@ -163,12 +163,6 @@ class ProjectTasksForm(models.Model):
         string='Process Line',
         required=False)
 
-    # safety_line_ids = fields.One2many(
-    #     comodel_name='safety.progress',
-    #     inverse_name='task_id',
-    #     string='Safety Line',
-    #     required=False)
-
     tracking_log = fields.Text(
         string="Progress Details",
         tracking=True,
@@ -184,11 +178,57 @@ class ProjectTasksForm(models.Model):
         compute='_set_default_progress',
         required=False)
 
+    parent_show = fields.Boolean(
+        string='Parent Show',
+        compute='_get_parent_show',
+        required=False)
+
+    parent_flag = fields.Boolean(
+        string='Parent Show',
+        required=False)
+
     def _set_default_progress(self):
         for rec in self:
-            rate = rec.process_line_ids.filtered(lambda line: line.state == 'done').mapped('rate')
-            action = sum(rate)
-            rec.process_widget_flag = action
+            if not rec.child_ids:
+                rate = rec.process_line_ids.filtered(lambda line: line.state == 'done').mapped('rate')
+                action = sum(rate)
+                rec.process_widget_flag = action
+            else:
+                rate = self._get_subtasks_rate(rec)
+                rec.process_widget_flag = rate
+
+    def _get_subtasks_rate(self, parent):
+        for clac in self:
+            my_list = []
+            child_ids = parent.child_ids
+            for ch in child_ids:
+                done_process_lines = ch.process_line_ids.filtered(lambda l: l.state == 'done')
+                progress_rate = sum(done_process_lines.mapped('rate'))
+                my_list.append(progress_rate)
+            parent_rate = sum(my_list) / len(child_ids)
+            return parent_rate
+
+    def _get_subtasks_wt(self, parent):
+        for wt in self:
+            my_list = []
+            child_ids = parent.child_ids
+            for ch in child_ids:
+                subtask_weight = ch.x_studio_weight
+                my_list.append(subtask_weight)
+            parent_wt = sum(my_list) / len(child_ids)
+            return parent_wt
+
+    @api.depends('child_ids')
+    def _get_parent_show(self):
+        for rec in self:
+            if rec.child_ids:
+                rec.parent_show = False
+                rec.write({'parent_flag': False})
+                rec.write({'progress_widget': self._get_subtasks_rate(rec)})
+                rec.write({'x_studio_weight': self._get_subtasks_wt(rec)})
+            else:
+                rec.parent_show = True
+                rec.write({'parent_flag': True})
 
     @api.depends('x_studio_weight', 'process_line_ids')
     def _get_progress_widget(self):
