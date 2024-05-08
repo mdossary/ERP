@@ -26,8 +26,7 @@ class ReportTasks(models.Model):
             new_res.append({
                 'condition': line.child_ids,
                 'parent': line.name,
-                'progress': round(sum(done_process_lines.mapped('rate')),
-                                  2) if not line.child_ids else self._get_subtasks_rate(line),
+                'progress': round(line.tree_progress, 2),
                 'planned_date_end': line.date_deadline,
                 'x_studio_n_actual': round(line.x_studio_n_actual, 2),
                 'x_studio_n_planned': round(line.x_studio_n_planned, 2)

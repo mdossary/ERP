@@ -37,6 +37,10 @@ class ProjectTasksForm(models.Model):
         compute='_set_default_progress',
         required=False)
 
+    tree_progress = fields.Float(
+        string='Progress',
+        required=False)
+
     parent_show = fields.Boolean(
         string='Parent Show',
         compute='_get_parent_show',
@@ -44,6 +48,11 @@ class ProjectTasksForm(models.Model):
 
     parent_flag = fields.Boolean(
         string='Parent Show',
+        required=False)
+    
+    all_progress =  fields.Float(
+        string='All Progress',
+        compute='set_all_progress',
         required=False)
 
     def _get_subtasks_rate(self, parent):
@@ -60,6 +69,16 @@ class ProjectTasksForm(models.Model):
                 my_list.append(progress_rate)
             parent_rate = sum(my_list) / len(child_ids)
             return parent_rate
+        
+    @api.depends('progress_widget')
+    def set_all_progress(self):
+        for record in self:
+            my_list = []
+            count = 0
+            for ch in record.child_ids:
+                count = count + 1
+                my_list.append(ch.process_widget_flag)
+            record.all_progress = sum(my_list) / count if sum(my_list) > 0 else sum(my_list)
 
     def _set_default_progress(self):
         """
@@ -70,9 +89,17 @@ class ProjectTasksForm(models.Model):
                 rate = rec.process_line_ids.filtered(lambda line: line.state == 'done').mapped('rate')
                 action = sum(rate)
                 rec.process_widget_flag = action
+                rec.write({'tree_progress': action})
             else:
-                rate = self._get_subtasks_rate(rec)
-                rec.write({'process_widget_flag': rate})
+                my_list = []
+                count = 0
+                for ch in rec.child_ids:
+                    count = count + 1
+                    my_list.append(ch.process_widget_flag)
+                rate = sum(my_list) / count if sum(my_list) > 0 else sum(my_list)
+                rec.update({'process_widget_flag': rate})
+                rec.update({'tree_progress': rate})
+                print('nnnnnnnnnnnnnnnnnnnnnnnnnnnn', rec.process_widget_flag)
 
     def _get_subtasks_wt(self, parent):
         """
