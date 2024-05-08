@@ -33,9 +33,18 @@ class ReportTasks(models.Model):
             })
         return new_res
 
-    def planned_progress_aot(self, project):
-        my_list = []
+    def actual_header(self, project):
+        actual = []
         for po in project.task_ids:
-            my_list.append(po.x_studio_planned_progress_)
-        result = sum(my_list) * 100
+            if po.child_ids:
+                actual.append(po.x_studio_item_actual_progress_aot_)
+        result = sum(actual) * 100
+        return round(result, 2)
+
+    def planned_header(self, project):
+        planned = []
+        for po in project.task_ids:
+            if po.child_ids:
+                planned.append(po.x_studio_planned_progress_)
+        result = sum(planned) * 100
         return round(result, 2)

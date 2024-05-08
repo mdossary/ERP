@@ -80,14 +80,14 @@
                             <br/>
                         </span>
 
-                        <span t-field="doc.project_id.x_studio_actual_wt" t-options-widget="&quot;float&quot;" t-options-precision="2"/>
+                        <span t-esc="doc.actual_header(doc.project_id)"/>
                     </div>
                     <div class="col-3 ">
                         <span>
                             <strong>Planned Progress AOT %:</strong>
                             <br/>
                         </span>
-                        <span t-esc="doc.planned_progress_aot(doc.project_id)"/>
+                        <span t-esc="doc.planned_header(doc.project_id)"/>
                     </div>
                     <div class="col-3 ">
                         <span>
