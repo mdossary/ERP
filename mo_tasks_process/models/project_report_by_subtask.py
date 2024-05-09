@@ -2,6 +2,13 @@ from odoo import fields, models, api
 from datetime import datetime
 
 
+class Project(models.Model):
+    _inherit = 'project.project'
+
+    count_tasks = fields.Many2many(
+        comodel_name='project.task',
+        string='Target Tasks')
+
 class ReportTasks(models.Model):
     _inherit = 'project.update'
 
@@ -35,16 +42,15 @@ class ReportTasks(models.Model):
 
     def actual_header(self, project):
         actual = []
-        for po in project.task_ids:
-            if po.child_ids:
-                actual.append(po.x_studio_item_actual_progress_aot_)
+        for po in project.count_tasks:
+            actual.append(po.x_studio_item_actual_progress_aot_)
         result = sum(actual) * 100
         return round(result, 2)
 
     def planned_header(self, project):
         planned = []
-        for po in project.task_ids:
-            if po.child_ids:
-                planned.append(po.x_studio_planned_progress_)
+        for po in project.count_tasks:
+            planned.append(po.x_studio_planned_progress_)
         result = sum(planned) * 100
         return round(result, 2)
+

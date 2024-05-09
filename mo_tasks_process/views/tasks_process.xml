@@ -87,5 +87,17 @@
 
             </field>
         </record>
+
+        <record id="count_project_project" model="ir.ui.view">
+            <field name="name">count.project.project</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="count_tasks" widget="many2many_tags"/>
+                </xpath>
+
+            </field>
+        </record>
     </data>
 </odoo>
