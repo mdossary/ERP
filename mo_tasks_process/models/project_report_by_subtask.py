@@ -47,11 +47,13 @@ class ReportTasks(models.Model):
         for po in project.count_tasks:
             actual.append(po.x_studio_item_actual_progress_aot_)
         result = sum(actual) * 100
-        return result
+        output = "%.2f" % result
+        return output
 
     def planned_header(self, project):
         planned = []
         for po in project.count_tasks:
             planned.append(po.x_studio_planned_progress_)
         result = sum(planned) * 100
-        return result
+        output = "%.2f" % result
+        return output
