@@ -7,7 +7,9 @@ class Project(models.Model):
 
     count_tasks = fields.Many2many(
         comodel_name='project.task',
+        domain="[('id', 'in', task_ids)]",
         string='Target Tasks')
+
 
 class ReportTasks(models.Model):
     _inherit = 'project.update'
@@ -53,4 +55,3 @@ class ReportTasks(models.Model):
             planned.append(po.x_studio_planned_progress_)
         result = sum(planned) * 100
         return round(result, 2)
-
