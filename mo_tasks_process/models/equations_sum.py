@@ -49,11 +49,22 @@ class ProjectTasksForm(models.Model):
     parent_flag = fields.Boolean(
         string='Parent Show',
         required=False)
-    
-    all_progress =  fields.Float(
+
+    all_progress = fields.Float(
         string='All Progress',
         compute='set_all_progress',
         required=False)
+
+    all_wt_parent = fields.Float(
+        string='All WT',
+        compute='set_all_progress_wt',
+        required=False
+    )
+    all_planned = fields.Float(
+        string='All Planned',
+        compute='set_all_progress_wt',
+        required=False
+    )
 
     def _get_subtasks_rate(self, parent):
         """
@@ -69,7 +80,7 @@ class ProjectTasksForm(models.Model):
                 my_list.append(progress_rate)
             parent_rate = sum(my_list) / len(child_ids)
             return parent_rate
-        
+
     @api.depends('progress_widget')
     def set_all_progress(self):
         for record in self:
@@ -161,3 +172,17 @@ class ProjectTasksForm(models.Model):
             else:
                 result = self._get_subtasks_rate(widget)
                 widget.progress_widget = result
+
+    def set_all_progress_wt(self):
+        for record in self:
+            my_list = []
+            plan = []
+            if not record.child_ids:
+                record.all_wt_parent = record.x_studio_item_actual_progress_aot_ * 100 if record.x_studio_item_actual_progress_aot_ > 0 else record.x_studio_item_actual_progress_aot_
+                record.all_planned = record.x_studio_planned_progress_ * 100 if record.x_studio_planned_progress_ > 0 else record.x_studio_planned_progress_
+            else:
+                for ch in record.child_ids:
+                    my_list.append(ch.x_studio_item_actual_progress_aot_)
+                    plan.append(ch.x_studio_planned_progress_)
+                record.all_wt_parent = sum(my_list) * 100 if sum(my_list) > 0 else sum(my_list)
+                record.all_planned = sum(plan) * 100 if sum(plan) > 0 else sum(plan)

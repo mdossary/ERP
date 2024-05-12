@@ -10,9 +10,36 @@ class Project(models.Model):
         domain="[('id', 'in', task_ids)]",
         string='Target Tasks')
 
+    mo_planned_wt = fields.Float(
+        string='Planned WT',
+        compute="return_actual_planned_wt",
+        required=False)
+
+    mo_actual_wt = fields.Float(
+        string='Actual WT',
+        compute="return_actual_planned_wt",
+        required=False)
+
+    def return_actual_planned_wt(self):
+        for rec in self:
+            actual = 0
+            planned = 0
+            for task in rec.task_ids:
+                if not task.child_ids:
+                    actual += task.all_wt_parent
+                    planned += task.all_planned
+            output_actual = "%.2f" % actual
+            output_planned = "%.2f" % planned
+            rec.mo_planned_wt = output_actual
+            rec.mo_actual_wt = output_planned
+
 
 class ReportTasks(models.Model):
     _inherit = 'project.update'
+
+    def without_round(self, number):
+        output = "%.2f" % number
+        return output
 
     def _get_subtasks_rate(self, parent):
         for clac in self:
@@ -37,23 +64,25 @@ class ReportTasks(models.Model):
                 'parent': line.name,
                 'progress': round(line.tree_progress, 2),
                 'planned_date_end': line.date_deadline,
-                'x_studio_n_actual': round(line.x_studio_n_actual, 2),
-                'x_studio_n_planned': round(line.x_studio_n_planned, 2)
+                'x_studio_n_actual': self.without_round(line.all_wt_parent),
+                'x_studio_n_planned': self.without_round(line.all_planned)
             })
         return new_res
 
     def actual_header(self, project):
         actual = []
-        for po in project.count_tasks:
-            actual.append(po.x_studio_item_actual_progress_aot_)
+        for po in project.task_ids:
+            if not po.child_ids:
+                actual.append(po.x_studio_item_actual_progress_aot_)
         result = sum(actual) * 100
         output = "%.2f" % result
-        return output
+        return result
 
     def planned_header(self, project):
         planned = []
-        for po in project.count_tasks:
-            planned.append(po.x_studio_planned_progress_)
+        for po in project.task_ids:
+            if not po.child_ids:
+                planned.append(po.x_studio_planned_progress_)
         result = sum(planned) * 100
         output = "%.2f" % result
-        return output
+        return result

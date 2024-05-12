@@ -13,7 +13,9 @@
                     <field name="parent_show" invisible="1"/>
                     <field name="parent_flag" invisible="1"/>
                     <field name="all_progress" invisible="1"/>
-                    
+                    <field name="all_wt_parent" invisible="1"/>
+                    <field name="all_planned" invisible="1"/>
+
                 </xpath>
                 <xpath expr="//notebook" position="inside">
                     <page name="process_task_details_mo" string="Progress">
@@ -82,9 +84,6 @@
                 <xpath expr="//field[@name='progress']" position="after">
                     <field name="tree_progress" widget="progressbar" string="Progress%"/>
                 </xpath>
-
-
-
             </field>
         </record>
 
@@ -96,6 +95,10 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="task_ids" widget="many2many_tags" invisible="1"/>
                     <field name="count_tasks" widget="many2many_tags" invisible="0"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="mo_planned_wt" invisible="0"/>
+                    <field name="mo_actual_wt"  invisible="0"/>
                 </xpath>
 
             </field>
