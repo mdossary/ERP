@@ -80,14 +80,16 @@
                             <br/>
                         </span>
 
-                        <span t-esc="doc.project_id.mo_actual_wt"/>
+                        <span t-esc="doc.actual_header(doc.project_id)"/>
+
                     </div>
                     <div class="col-3 ">
                         <span>
                             <strong>Planned Progress AOT %:</strong>
                             <br/>
                         </span>
-                        <span t-esc="doc.project_id.mo_planned_wt"/>
+                        <span t-esc="doc.planned_header(doc.project_id)"/>
+
                     </div>
                     <div class="col-3 ">
                         <span>
