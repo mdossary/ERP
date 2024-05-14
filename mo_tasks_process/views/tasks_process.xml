@@ -10,6 +10,12 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="tracking_log" invisible="1"/>
+                    <field name="parent_show" invisible="1"/>
+                    <field name="parent_flag" invisible="1"/>
+                    <field name="all_progress" invisible="1"/>
+                    <field name="all_wt_parent" invisible="1"/>
+                    <field name="all_planned" invisible="1"/>
+
                 </xpath>
                 <xpath expr="//notebook" position="inside">
                     <page name="process_task_details_mo" string="Progress">
@@ -19,10 +25,10 @@
                         </group>
                         <group>
                             <field name="progress_widget" widget="progressbar" invisible="1"/>
-                            <field name="process_widget_flag" widget="progressbar" invisible="1"/>
-                            <field name="progress_widget" widget="progressbar"/>
+                            <field name="process_widget_flag" widget="progressbar" />
+                            <field name="progress_widget" widget="progressbar" invisible="1"/>
                         </group>
-                        <field name="process_line_ids">
+                        <field name="process_line_ids" attrs="{'invisible': [('parent_flag', '!=', True)]}">
                             <tree editable="bottom" delete="0">
 
                                 <field name="date_process"  attrs="{'readonly': [('readonly_trigger', '=', True)]}"/>
@@ -39,7 +45,7 @@
                                        widget="badge"
                                        decoration-danger="state == 'not'" decoration-success="state == 'done'"
                                 />
-                                <field name="manager_note"  string="Manager Description" attrs="{'readonly': [('readonly_trigger', '=', True)]}" groups="mo_tasks_process.mo_group_task_project_manager_one"/>
+                                <field name="manager_note"  string="Manager Description" attrs="{'readonly': [('readonly_trigger', '=', True)]}"/>
                                 <field name="task_id" invisible="1"/>
                                 <button name="process_timesheet"
                                         type="object"
@@ -76,10 +82,24 @@
                 </xpath>
 
                 <xpath expr="//field[@name='progress']" position="after">
-                    <field name="process_widget_flag" widget="progressbar" string="Progress%"/>
+                    <field name="tree_progress" widget="progressbar" string="Progress%"/>
                 </xpath>
+            </field>
+        </record>
 
-
+        <record id="count_project_project" model="ir.ui.view">
+            <field name="name">count.project.project</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="task_ids" widget="many2many_tags" invisible="1"/>
+                    <field name="count_tasks" widget="many2many_tags" invisible="0"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="mo_planned_wt" invisible="0"/>
+                    <field name="mo_actual_wt"  invisible="0"/>
+                </xpath>
 
             </field>
         </record>

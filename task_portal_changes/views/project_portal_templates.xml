@@ -4,7 +4,7 @@
         <t t-if="grouped_tasks">
             <t t-call="portal.portal_table">
                 <thead>
-                    <tr>
+                    <tr style="width:100%;">
                         <!-- Allows overrides in modules -->
                         <t t-set="group_by_in_header_list" t-value="['priority', 'status', 'project', 'stage', 'milestone']"></t>
                         <t t-set="number_of_header" t-value="8"></t>
@@ -12,12 +12,11 @@
                         <t t-set="grouped_tasks_colspan" t-value="number_of_header - 1 if groupby in group_by_in_header_list else number_of_header"></t>
                         <t t-set="grouped_tasks_colspan" t-value="grouped_tasks_colspan if allow_milestone else grouped_tasks_colspan - 1"></t>
                         <th t-attf-colspan="{{2 if groupby != 'priority' else 1}}"/>
-                        <th>Name</th>
-                        <th>Item Progress %</th>
-                        <th  name="project_portal_milestones">Actual Progress %</th>
-                        <th t-if="groupby != 'status'"/>
-                        <th t-if="groupby != 'project'">Project</th>
-                        <th t-if="groupby != 'stage'" class="text-end">Stage</th>
+                        <th width="45%">Name</th>
+                        <th width="20%">Item Progress %</th>
+                        <th width="20%" name="project_portal_milestones">Actual Progress %</th>
+                        <th width="25%" t-if="groupby != 'status'"/>
+                        <th  width="15%" t-if="groupby != 'stage'" class="text-end">Stage</th>
                     </tr>
                 </thead>
                 <t t-foreach="grouped_tasks" t-as="tasks">
@@ -69,9 +68,6 @@
                                     <t t-call="project.portal_my_tasks_state_widget_template">
                                         <t t-set="path" t-value="'tasks'"/>
                                     </t>
-                                </td>
-                                <td t-if="groupby != 'project'">
-                                    <span class="badge rounded-pill text-bg-info mw-100 text-truncate" title="Current project of the task" t-esc="task.project_id.name" />
                                 </td>
                                 <td t-if="groupby != 'stage'" class="text-end">
                                     <span t-attf-class="badge #{'text-bg-primary' if task.stage_id.fold else 'text-bg-light'}" title="Current stage of the task" t-esc="task.stage_id.name"/>
@@ -148,7 +144,8 @@
         </xpath>
     </template>
 
-
-
+     <template id="allocated_portal" inherit_id="project.portal_my_task_planned_hours_template">
+         <xpath expr="//strong" position="replace"/><xpath expr="//span" position="replace"/>
+    </template>
 
 </odoo>

@@ -80,14 +80,16 @@
                             <br/>
                         </span>
 
-                        <span t-field="doc.project_id.x_studio_actual_wt" t-options-widget="&quot;float&quot;" t-options-precision="2"/>
+                        <span t-esc="doc.actual_header(doc.project_id)"/>
+
                     </div>
                     <div class="col-3 ">
                         <span>
                             <strong>Planned Progress AOT %:</strong>
-                            <br/>Report Css green 2
+                            <br/>
                         </span>
-                        <span t-field="doc.project_id.x_studio_planned_wt" t-options-widget="&quot;float&quot;" t-options-precision="2"/>
+                        <span t-esc="doc.planned_header(doc.project_id)"/>
+
                     </div>
                     <div class="col-3 ">
                         <span>
@@ -154,7 +156,7 @@
             <div class="row">
                 <div class="col text-o-color-1 h4" style="margin-bottom:20px;margin-top:50px;margin-top:60px">
                     <span>
-                       Project’s Progress</span>
+                        Project’s Progress</span>
                 </div>
             </div>
             <div class="row">
@@ -184,7 +186,8 @@
                         <th  width="20%">
                             <span>Item Progress %</span>
                         </th>
-                        <th class="text-start"  width="20%">End Date</th>
+                        <th class="text-start"  width="20%">
+                            Planned Completion Date</th>
                         <th class="text-start" width="15%">
                             <span>Actual Progress %</span>
                         </th>
@@ -200,10 +203,9 @@
                                 <span t-esc="ta['parent']"/>
                             </td>
                             <td class="g-200 fw-bold o_line_section'" style="background-color:#C0C0C0;color:black;">
-                                <div class="progress-bar-container">
-                                    <div class="progress-task-widget" t-att-style="'width: ' + str(ta['progress']) + '%;'">
-                                        <span class="text-center" t-esc="ta['progress'] " style="margin-right:140px"/>
-                                    </div>
+                                <div class="widget-bar">
+                                    <div class="progress-bar-mo" t-att-style="'width: ' + str(ta['progress']) + '%;'"/>
+                                    <div class="rate-label"><span t-esc="ta['progress']"/></div>
                                 </div>
                             </td>
                             <td class="g-200 fw-bold o_line_section text-start'" style="background-color:#C0C0C0;color:black;">
@@ -221,10 +223,9 @@
                                 <span t-esc="ta['parent']"/>
                             </td>
                             <td>
-                                <div class="progress-bar-container">
-                                    <div class="progress-task-widget" t-att-style="'width: ' + str(ta['progress']) + '%;'">
-                                        <span class="text-center" t-esc="ta['progress']" style="margin-right:140px"/>
-                                    </div>
+                                <div class="widget-bar">
+                                    <div class="progress-bar-mo" t-att-style="'width: ' + str(ta['progress']) + '%;'"/>
+                                    <div class="rate-label"><span t-esc="ta['progress']"/></div>
                                 </div>
                             </td>
                             <td class="text-start">

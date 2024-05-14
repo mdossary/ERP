@@ -1,14 +1,24 @@
-.progress-bar-container {
+
+.widget-bar {
   width: 200px;
-  height: 20px;
+  height: 30px;
   background-color: #f0f0f0;
   border-radius: 5px;
-  overflow: hidden;
+  position: relative;
 }
 
-.progress-task-widget {
+.progress-bar-mo {
   height: 100%;
-  background-color: green;
-  width: 0;
-  transition: width 0.5s ease-in-out;
+  background-color: #087d0c;
+  border-radius: 5px;
+}
+
+.rate-label {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 30px;
+  color: #000000;
+  font-weight: bold;
 }
