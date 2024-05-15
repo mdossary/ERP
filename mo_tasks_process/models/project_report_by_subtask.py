@@ -11,6 +11,7 @@ class Project(models.Model):
         comodel_name='project.task',
         domain="[('id', 'in', target_tasks)]",
         string='Target Tasks')
+        
 
     mo_planned_wt = fields.Float(
         string='Planned WT',
