@@ -29,8 +29,8 @@ class Project(models.Model):
                 for rec in res.count_tasks:
                     actual.append(rec.x_studio_item_actual_progress_aot_)
                     planned.append(rec.x_studio_planned_progress_)
-                plan_total = "%.2f" % sum(planned)
-                actual_total = "%.2f" % sum(actual)
+                plan_total = "%.2f" % sum(planned) * 100
+                actual_total = "%.2f" % sum(actual) * 100
                 res.mo_actual_wt = actual_total
                 res.mo_planned_wt = plan_total
             else:
