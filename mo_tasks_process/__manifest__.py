@@ -4,7 +4,7 @@
     'name': ' Tasks Process',
     'summary': 'Project Tasks Workflow',
     "license": "OPL-1",
-    'version': '16.0.0.1'
+    'version': '16.0.0.2'
     'category': 'Project',
     'author': 'Mohamed Isam',
     'depends': ['project', 'hr_timesheet','studio_customization','project_enterprise'],
