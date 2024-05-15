@@ -88,5 +88,23 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="progress_count_inherited_view" model="ir.ui.view">
+            <field name="name">project.count.inherited.progress</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="task_ids" invisible='1'/>
+                    <field name="count_tasks" widget="many2many_tags" string="Target Tasks"/>
+                    <field name="mo_planned_wt"/>
+                    <field name="mo_actual_wt"/>
+                </xpath>
+                
+            </field>
+        </record>
+
+
     </data>
 </odoo>

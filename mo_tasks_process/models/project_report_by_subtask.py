@@ -4,6 +4,9 @@ from datetime import datetime
 
 class Project(models.Model):
     _inherit = 'project.project'
+    
+    
+    task_ids = fields.One2many(comodel_name='project.task',inverse_name='project_id')
 
     count_tasks = fields.Many2many(
         comodel_name='project.task',
