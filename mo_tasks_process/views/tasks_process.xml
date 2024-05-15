@@ -96,7 +96,7 @@
             <field name="arch" type="xml">
                 
                 <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="target_tasks" widget="many2many_tags" invisible='1'/>
+                    <field name="task_ids" invisible='1'/>
                     <field name="count_tasks" widget="many2many_tags" string="Target Tasks"/>
                     <field name="mo_planned_wt"/>
                     <field name="mo_actual_wt"/>

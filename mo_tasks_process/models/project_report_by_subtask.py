@@ -6,11 +6,9 @@ class Project(models.Model):
     _inherit = 'project.project'
     
     
-   target_tasks = fields.One2many(comodel_name='project.task', inverse_name='project_id')
-
     count_tasks = fields.Many2many(
         comodel_name='project.task',
-        domain="[('id', 'in', target_tasks)]",
+        domain="[('id', 'in', task_ids)]",
         string='Target Tasks')
 
     mo_planned_wt = fields.Float(
