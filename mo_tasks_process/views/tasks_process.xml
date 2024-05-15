@@ -46,7 +46,8 @@
                                        widget="badge"
                                        decoration-danger="state == 'not'" decoration-success="state == 'done'"
                                 />
-                                <field name="manager_note"  string="Manager Description"  attrs="{'readonly': ['|',('if_manager_flag', '=', False),('readonly_trigger', '=', True)]}"/>
+                                <field name="manager_note"  string=" Manager Descriptipns"  
+                                        attrs="{'readonly': ['|',('if_manager_flag', '=', False),('readonly_trigger', '=', True)]}"/>
                                 <field name="task_id" invisible="1"/>
                                 <button name="process_timesheet"
                                         type="object"
