@@ -27,7 +27,7 @@ class Project(models.Model):
         for rec in self:
             actual = 0
             planned = 0
-            for task in rec.task_ids:
+            for task in rec.count_tasks:
                 if not task.child_ids:
                     actual += task.all_wt_parent
                     planned += task.all_planned
