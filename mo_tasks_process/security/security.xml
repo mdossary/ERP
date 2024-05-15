@@ -6,9 +6,8 @@
         <field name="name"> Project Manager</field>
     </record>
 
-    <record id="mo_group_task_project_supervisor_one" model="res.groups">
-        <field name="name"> Supervisor Task</field>
-    </record>
+    
+
 
 
 </odoo>

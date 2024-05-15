@@ -66,6 +66,13 @@ class ProjectTasksForm(models.Model):
         required=False
     )
 
+    @api.model
+    def task_studio_cron(self):
+        for rec in self:
+            rec.x_studio_item_actual_progress_aot_ = rec.all_progress
+            rec.x_studio_weight = rec.all_wt_parent
+            rec.x_studio_planned_progress_ = rec.all_planned
+
     def _get_subtasks_rate(self, parent):
         """
         This Function : Receive Parent id and then return the subtasks progress Rate

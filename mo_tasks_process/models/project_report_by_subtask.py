@@ -4,14 +4,12 @@ from datetime import datetime
 
 class Project(models.Model):
     _inherit = 'project.project'
-
-    target_tasks = fields.One2many(comodel_name='project.task', inverse_name='project_id')
-
+    
+    
     count_tasks = fields.Many2many(
         comodel_name='project.task',
-        domain="[('id', 'in', target_tasks)]",
+        domain="[('id', 'in', task_ids)]",
         string='Target Tasks')
-        
 
     mo_planned_wt = fields.Float(
         string='Planned WT',
@@ -29,28 +27,15 @@ class Project(models.Model):
                 planned = []
                 actual = []
                 for rec in res.count_tasks:
-                    actual.append(rec.x_studio_item_actual_progress_aot_)
-                    planned.append(rec.x_studio_planned_progress_)
-                plan_total = "%.2f" % sum(planned)
-                actual_total = "%.2f" % sum(actual)
+                    actual.append(rec.x_studio_item_actual_progress_aot_ * 100)
+                    planned.append(rec.x_studio_planned_progress_ * 100)
+                plan_total = "%.2f" % sum(planned) 
+                actual_total = "%.2f" % sum(actual) 
                 res.mo_actual_wt = actual_total
                 res.mo_planned_wt = plan_total
             else:
                 res.mo_actual_wt = 0
                 res.mo_planned_wt = 0
-
-    def return_actual_planned_wt(self):
-        for rec in self:
-            actual = 0
-            planned = 0
-            for task in rec.task_ids:
-                if not task.child_ids:
-                    actual += task.all_wt_parent
-                    planned += task.all_planned
-            output_actual = "%.2f" % actual
-            output_planned = "%.2f" % planned
-            rec.mo_planned_wt = output_actual
-            rec.mo_actual_wt = output_planned
 
 
 class ReportTasks(models.Model):
@@ -94,7 +79,7 @@ class ReportTasks(models.Model):
             actual.append(po.x_studio_item_actual_progress_aot_)
         result = sum(actual) * 100
         output = "%.2f" % result
-        return result
+        return output
 
     def planned_header(self, project):
         planned = []
@@ -102,4 +87,4 @@ class ReportTasks(models.Model):
             planned.append(po.x_studio_planned_progress_)
         result = sum(planned) * 100
         output = "%.2f" % result
-        return result
+        return output

@@ -81,7 +81,11 @@ class MoTaskProcess(models.Model):
 
     if_manager = fields.Boolean(
         string='If Manager',
-        compute='readonly_manager_user',
+        required=False)
+    
+    if_manager_flag = fields.Boolean(
+        string='If Manager',
+        compute='note_manager_readonly',
         required=False)
 
     @api.depends('user_process', 'manager_process')
@@ -97,6 +101,14 @@ class MoTaskProcess(models.Model):
                 rec.if_manager = False
             else:
                 rec.if_manager = True
+                
+    def note_manager_readonly(self):
+        for rec in self:
+            if self.env.user.has_group('mo_tasks_process.mo_group_task_project_manager_one'):
+                rec.write({'if_manager_flag':True})
+            else:
+                rec.write({'if_manager_flag':False})
+                
 
     @api.depends('user_note')
     def change_log_text(self):
@@ -152,3 +164,6 @@ class MoTaskProcess(models.Model):
             reject.write({'readonly_trigger': True})
             reject.write({'state': 'not'})
             self._pass_value_to_log()
+            
+    
+            
