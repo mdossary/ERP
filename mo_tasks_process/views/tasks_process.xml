@@ -93,7 +93,7 @@
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="task_ids" widget="many2many_tags" invisible="1"/>
+                    <field name="target_tasks" widget="many2many_tags" invisible='1'/>
                     <field name="count_tasks" widget="many2many_tags" invisible="0"/>
                 </xpath>
                 <xpath expr="//field[@name='user_id']" position="after">

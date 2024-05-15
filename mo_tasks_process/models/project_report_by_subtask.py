@@ -5,20 +5,38 @@ from datetime import datetime
 class Project(models.Model):
     _inherit = 'project.project'
 
+    target_tasks = fields.One2many(comodel_name='project.task', inverse_name='project_id')
+
     count_tasks = fields.Many2many(
         comodel_name='project.task',
-        domain="[('id', 'in', task_ids)]",
+        domain="[('id', 'in', target_tasks)]",
         string='Target Tasks')
 
     mo_planned_wt = fields.Float(
         string='Planned WT',
-        compute="return_actual_planned_wt",
+        compute='return_actual_planned_wt',
         required=False)
 
     mo_actual_wt = fields.Float(
         string='Actual WT',
-        compute="return_actual_planned_wt",
+        compute='return_actual_planned_wt',
         required=False)
+
+    def return_actual_planned_wt(self):
+        for res in self:
+            if res.count_tasks:
+                planned = []
+                actual = []
+                for rec in res.count_tasks:
+                    actual.append(rec.x_studio_item_actual_progress_aot_)
+                    planned.append(rec.x_studio_planned_progress_)
+                plan_total = "%.2f" % sum(planned)
+                actual_total = "%.2f" % sum(actual)
+                res.mo_actual_wt = actual_total
+                res.mo_planned_wt = plan_total
+            else:
+                res.mo_actual_wt = 0
+                res.mo_planned_wt = 0
 
     def return_actual_planned_wt(self):
         for rec in self:
