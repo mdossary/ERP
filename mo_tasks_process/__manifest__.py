@@ -6,11 +6,11 @@
     "license": "OPL-1",
     'category': 'Project',
     'author': 'Mohamed Isam',
-    'depends': ['project', 'hr_timesheet'],
+    'depends': ['project', 'hr_timesheet','studio_customization'],
     'data': [
         'security/ir.model.access.csv',
         'security/security.xml',
-        # 'data/sequence_data.xml',
+        'data/sequence_data.xml',
         'views/tasks_process.xml',
         'views/report_template.xml',
         # 'views/safety_view_form.xml',

@@ -33,6 +33,7 @@
 
                                 <field name="date_process"  attrs="{'readonly': [('readonly_trigger', '=', True)]}"/>
                                 <field name="action_click"  invisible="1"/>
+                                <field name="if_manager_flag"  invisible="1"/>
                                 <field name="if_user" invisible="1"/>
                                 <field name="if_manager" invisible="1"/>
                                 <field name="user_note_flag" invisible="1"/>
@@ -45,7 +46,7 @@
                                        widget="badge"
                                        decoration-danger="state == 'not'" decoration-success="state == 'done'"
                                 />
-                                <field name="manager_note"  string="Manager Description" attrs="{'readonly': [('readonly_trigger', '=', True)]}"/>
+                                <field name="manager_note"  string="Manager Description"  attrs="{'readonly': ['|',('if_manager_flag', '=', False),('readonly_trigger', '=', True)]}"/>
                                 <field name="task_id" invisible="1"/>
                                 <button name="process_timesheet"
                                         type="object"
@@ -84,23 +85,6 @@
                 <xpath expr="//field[@name='progress']" position="after">
                     <field name="tree_progress" widget="progressbar" string="Progress%"/>
                 </xpath>
-            </field>
-        </record>
-
-        <record id="count_project_project" model="ir.ui.view">
-            <field name="name">count.project.project</field>
-            <field name="model">project.project</field>
-            <field name="inherit_id" ref="project.edit_project"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="task_ids" widget="many2many_tags" invisible="1"/>
-                    <field name="count_tasks" widget="many2many_tags" invisible="0"/>
-                </xpath>
-                <xpath expr="//field[@name='user_id']" position="after">
-                    <field name="mo_planned_wt" invisible="0"/>
-                    <field name="mo_actual_wt"  invisible="0"/>
-                </xpath>
-
             </field>
         </record>
     </data>
