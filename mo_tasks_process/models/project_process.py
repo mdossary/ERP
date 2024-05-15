@@ -103,8 +103,8 @@ class MoTaskProcess(models.Model):
                 rec.if_manager = True
                 
     def note_manager_readonly(self):
-        for rec in self.task_id.process_line_ids:
-            if self.env.user.has_group('mo_tasks_process.mo_group_task_project_manager_one'):
+        for rec in self:
+            if self.user_process.has_group('mo_tasks_process.mo_group_task_project_manager_one'):
                 rec.write({'if_manager_flag':True})
             else:
                 rec.write({'if_manager_flag':False})
