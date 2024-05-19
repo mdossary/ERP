@@ -139,9 +139,9 @@ class MoTaskProcess(models.Model):
         raise ValidationError(_("You Can Not Use This Percent it the actual or WT will be more than 100 %"))
 
     def check_progress_limitation(self, rate):
-        acc = self.task_id.mo_item_actual_progress_aot
+        acc = self.task_id.x_studio_item_actual_progress_aot_
         line_rate = rate / 100
-        wt = self.task_id.mo_wt
+        wt = self.task_id.x_studio_weight
         check = acc + (line_rate * wt)
         total_rate = sum(self.task_id.process_line_ids.filtered(lambda line: line.state == 'done').mapped('rate'))
         if total_rate > 100 or rate + total_rate > 100:
@@ -152,7 +152,7 @@ class MoTaskProcess(models.Model):
     def process_timesheet(self):
         for rec in self:
             check = self.check_progress_limitation(rec.rate)
-            rec.task_id.write({'mo_item_actual_progress_aot': check})
+            rec.task_id.write({'x_studio_item_actual_progress_aot_': check})
             rec.write({'action_click': True})
             rec.write({'readonly_trigger': True})
             rec.write({'state': 'done'})

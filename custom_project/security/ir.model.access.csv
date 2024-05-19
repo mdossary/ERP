@@ -1,8 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mom_mom,mom.mom,model_mom_mom,,1,1,1,1
-access_action_items,action.items,model_action_items,,1,1,1,1
-access_action_items_tags,action.items.tags,model_action_items_tags,,1,1,1,1
-access_action_items_stages,action.items.stages,model_action_items_stages,,1,1,1,1
-access_project_update,project.update,model_project_update,,1,1,1,1
-
-

@@ -1,5 +1,5 @@
 
-.mo_widget-bar {
+.widget-bar {
   width: 200px;
   height: 30px;
   background-color: #f0f0f0;
@@ -7,13 +7,13 @@
   position: relative;
 }
 
-.mo_progress-bar-mo {
+.progress-bar-mo {
   height: 100%;
   background-color: #087d0c;
   border-radius: 5px;
 }
 
-.mo_rate-label {
+.rate-label {
   position: absolute;
   top: 0;
   left: 50%;

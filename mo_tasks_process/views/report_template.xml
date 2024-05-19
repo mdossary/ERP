@@ -2,34 +2,14 @@
 <odoo>
     <data>
 
-        <record id="update_project_paper_format" model="report.paperformat">
-            <field name="margin_right">7.0</field>
-            <field name="page_width" eval="False"/>
-            <field name="disable_shrinking" eval="False"/>
-            <field name="format">Letter</field>
-            <field name="margin_left">7.0</field>
-            <field name="dpi">90</field>
-            <field name="margin_bottom">10.0</field>
-            <field name="name">A4 (Blank) Landscape</field>
-            <field name="default" eval="False"/>
-            <field name="display_name">A4 (Blank) Landscape</field>
-            <field name="margin_top">10.0</field>
-            <field name="page_height" eval="False"/>
-            <field name="print_page_width">279.4</field>
-            <field name="header_line" eval="False"/>
-            <field name="print_page_height">215.9</field>
-            <field name="header_spacing">35</field>
-            <field name="orientation">Landscape</field>
-          </record>
-
         <record id="c" model="ir.actions.report">
             <field name="name">PROJECT PROGRESS UPDATE</field>
             <field name="model">project.update</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">mo_tasks_process.report_update_process_main</field>
             <field name="report_file">mo_tasks_process.report_update_process_main</field>
-            <field name="paperformat_id" ref="mo_tasks_process.update_project_paper_format"/>
             <field name="binding_model_id" ref="model_project_update"/>
+            <field name="paperformat_id" ref="studio_customization.a4_blank_landscape_f4153802-e073-4603-9722-65e5e095370c"/>
             <field name="binding_type">report</field>
         </record>
 
@@ -49,17 +29,17 @@
             <div class="page">
                 <div class="row bg-200">
                     <div class="col-2" style="margin-top:5px">
-                        <span t-field="doc.project_id.report_image" t-options-widget="&quot;image&quot;" t-options-qweb_img_raw_data="1"/>
+                        <span t-field="doc.project_id.x_avatar_image" t-options-widget="&quot;image&quot;" t-options-qweb_img_raw_data="1"/>
                     </div>
-                    <div class="col-7 text-center h6 o_bold" style="margin-top:0px; margin-left: -20px;">
-                        <span t-field="doc.project_id.name" class="o_bold"/>
+                    <div class="col-7 text-center h6 o_bold" style="margin-top:20px; margin-left: -20px;">
+                        <span t-field="doc.x_studio_project_name" class="o_bold"/>
                     </div>
                     <div class="col-3">
-                        <span t-field="doc.project_id.project_logo" t-options-widget="&quot;image&quot;" t-options-qweb_img_raw_data="1"/>
+                        <span t-field="doc.project_id.x_studio_company_logo" t-options-widget="&quot;image&quot;" t-options-qweb_img_raw_data="1"/>
                     </div>
                 </div>
                 <div class="row text-o-color-1 bg-200">
-                    <div class="col text-center h6 o_bold" style="margin-top:0px;margin-bottom:40px; margin-left: -70px;">
+                    <div class="col text-center h6 o_bold" style="margin-top:20px;margin-bottom:40px; margin-left: -70px;">
                         <span>PROJECT PROGRESS UPDATE</span>
                     </div>
                 </div>
@@ -90,7 +70,7 @@
                             <strong>Report No.:</strong>
                             <br/>
                         </span>
-                        <span t-field="doc.report_no"/>
+                        <span t-field="doc.x_studio_report_no"/>
                     </div>
                 </div>
                 <div class="row" style="margin-bottom:20px;margin-top:20px">
@@ -116,7 +96,7 @@
                             <strong>Status:</strong>
                             <br/>
                         </span>
-                        <span t-field="doc.overall_status"/>
+                        <span t-field="doc.status"/>
                     </div>
                     <div class="col-3 "/>
                 </div>
@@ -133,7 +113,7 @@
                             <strong>Overall Status:</strong>
                             <br/>
                         </span>
-                        <span t-field="doc.overall_status"/>
+                        <span t-field="doc.x_studio_overall_status"/>
                     </div>
                 </div>
                 <div class="row">
@@ -145,14 +125,14 @@
                         <strong>Safety:</strong>
                         <br/>
                     </span>
-                    <span t-field="doc.safety"/>
+                    <span t-field="doc.x_studio_safety"/>
                 </div>
                 <div class="col-6">
                     <span>
                         <strong>Tasks and Activities:</strong>
                         <br/>
                     </span>
-                    <span t-field="doc.task_and_activities"/>
+                    <span t-field="doc.x_studio_tasks_and_activities"/>
                 </div>
             </div>
             <div class="row" style="margin-bottom:20px;margin-top:20px">
@@ -161,14 +141,14 @@
                         <strong>Challenges:</strong>
                         <br/>
                     </span>
-                    <span t-field="doc.challenges"/>
+                    <span t-field="doc.x_studio_challenges"/>
                 </div>
                 <div class="col-6">
                     <span>
                         <strong>Any Other Items:</strong>
                         <br/>
                     </span>
-                    <span t-field="doc.any_other_items"/>
+                    <span t-field="doc.x_studio_any_other_items"/>
                 </div>
             </div>
         </template>
@@ -181,7 +161,7 @@
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <span t-field="doc.s_curve" t-options-widget="&quot;image&quot;" t-options-qweb_img_raw_data="1"/>
+                    <span t-field="doc.x_studio_s_curve" t-options-widget="&quot;image&quot;" t-options-qweb_img_raw_data="1"/>
                 </div>
             </div>
             <div class="row">
@@ -223,9 +203,9 @@
                                 <span t-esc="ta['parent']"/>
                             </td>
                             <td class="g-200 fw-bold o_line_section'" style="background-color:#C0C0C0;color:black;">
-                                <div class="mo_widget-bar">
-                                    <div class="mo_progress-bar-mo" t-att-style="'width: ' + str(ta['progress']) + '%;'"/>
-                                    <div class="mo_rate-label"><span t-esc="ta['progress']"/></div>
+                                <div class="widget-bar">
+                                    <div class="progress-bar-mo" t-att-style="'width: ' + str(ta['progress']) + '%;'"/>
+                                    <div class="rate-label"><span t-esc="ta['progress']"/></div>
                                 </div>
                             </td>
                             <td class="g-200 fw-bold o_line_section text-start'" style="background-color:#C0C0C0;color:black;">
@@ -274,9 +254,9 @@
             </div>
             <table class="table o_report_block_table">
                 <tbody>
-                    <tr t-foreach="doc.project_id.action_item_obj" t-as="table_line">
+                    <tr t-foreach="doc.x_studio_many2many_field_k5mgy" t-as="table_line">
                         <td>
-                            <span t-field="table_line.name"/>
+                            <span t-field="table_line.display_name"/>
                         </td>
                     </tr>
                 </tbody>
@@ -303,24 +283,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr t-foreach="doc.project_id.action_item_obj" t-as="table_line" >
+                    <tr t-foreach="doc.project_id.x_studio_action_items" t-as="table_line" >
                         <td>
                             <span t-field="table_line.id"/>
                         </td>
                         <td>
-                            <span t-field="table_line.name"/>
+                            <span t-field="table_line.display_name"/>
                         </td>
                         <td>
-                            <span t-field="table_line.description"/>
+                            <span t-field="table_line.x_studio_notes"/>
                         </td>
                         <td>
-                            <span t-field="table_line.mom.name"/>
+                            <span t-field="table_line.x_studio_many2one_field_WuWiC.x_name"/>
                         </td>
                         <td>
-                            <span t-field="table_line.due_date"/>
+                            <span t-field="table_line.x_studio_due_date"/>
                         </td>
                         <td>
-                            in progress
+                            <span t-field="table_line.x_studio_stage_id.display_name"/>
                         </td>
                     </tr>
                 </tbody>
