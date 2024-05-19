@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="mom_form_view" model="ir.ui.view">
+            <field name="name">Mom.form.view</field>
+            <field name="model">mom.mom</field>
+            <field name="arch" type="xml">
+                <form string="MOM">
+                    <sheet>
+                        <header>
+<!--                            <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" on_change="1" modifiers="{&quot;invisible&quot;: [[&quot;project_id&quot;, &quot;=&quot;, false], [&quot;stage_id&quot;, &quot;=&quot;, false]]}" can_create="true" can_write="true"/>-->
+<!--                        <field name="personal_stage_type_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" domain="[('user_id', '=', uid)]"/>-->
+                    </header>
+                       <div name="button_box" class="oe_button_box">
+                        <button name="action_item_count"
+                                class="oe_stat_button"
+                                icon="fa-archive"
+                                type="object"
+                                string="Action Items">
+                            <field name="items_count"/>
+                        </button>
+                    </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Weekly Meeting"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="meeting_date"/>
+                                <field name="time"/>
+                                <field name="location"/>
+                                <field name="attendees" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="project"/>
+                                <field name="project_task"/>
+                                <field name="company"/>
+                            </group>
+                        </group>
+                        <group string="AGENDA ITEMS:">
+                                <field name="agenda"/>
+                        </group>
+                        <group string="DISCUSSION SUMMARY:">
+                            <field name="discussion_summary"/>
+                        </group>
+                           <field name="type_down" placeholder="Type down your notes here..."/>
+                        <group>
+                            <field name="action_item_ids" editable="top" sample="1"
+                                   multi_edit="1" default_order="name"
+                                   widget="one2many"
+                                    mode="tree"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="attachment"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="mom_tree_view" model="ir.ui.view">
+            <field name="name">mom.tree.view</field>
+            <field name="model">mom.mom</field>
+            <field name="arch" type="xml">
+                <tree string="MOM" >
+                    <field name="name"/>
+                    <field name="project"/>
+                    <field name="meeting_date"/>
+                    <field name="time"/>
+                    <field name="location"/>
+                    <field name="attendees" widget="many2many_tags"/>
+                    <field name="company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mom_calendar_view" model="ir.ui.view">
+            <field name="name">mom.calendar</field>
+            <field name="model">mom.mom</field>
+            <field name="arch" type="xml">
+                <calendar string="MOM" date_start="meeting_date">
+                    <field name="name"/>
+                    <field name="attendees" widget="monetary"/>
+                </calendar>
+            </field>
+        </record>
+
+
+        <record id="mom_search_view" model="ir.ui.view">
+            <field name="name">mom.search</field>
+            <field name="model">mom.mom</field>
+            <field name="arch" type="xml">
+                <search string="MOM">
+                    <group expand="1" string="Group By">
+                        <filter string="Project " name="project"
+                                context="{'group_by':'project'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="mom_act_window" model="ir.actions.act_window">
+            <field name="name">MOM</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mom.mom</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no record click here to add new MOM.
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem name="MOM"
+                  id="mom_menu"
+                  parent="project.menu_main_pm"
+                  action="mom_act_window"
+                  sequence="3"/>
+
+    </data>
+</odoo>

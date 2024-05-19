@@ -65,14 +65,20 @@ class ProjectTasksForm(models.Model):
         compute='set_all_progress_wt',
         required=False
     )
+    
+    #Cron Job Function :
 
-    @api.model
-    def task_studio_cron(self):
+    def task_studio_cron(self): 
         for rec in self:
-            rec.x_studio_item_actual_progress_aot_ = rec.all_progress
-            rec.x_studio_weight = rec.all_wt_parent
-            rec.x_studio_planned_progress_ = rec.all_planned
-
+            tasks = rec.search([])
+            for r in tasks:
+                r._get_mo_duration_day()
+                r._get_wt_per_day()
+                r._get_mo_duration()
+                r._get_planned_aot_rate()
+                r._return_different()
+                
+           
     def _get_subtasks_rate(self, parent):
         """
         This Function : Receive Parent id and then return the subtasks progress Rate
@@ -127,9 +133,9 @@ class ProjectTasksForm(models.Model):
             my_list = []
             child_ids = parent.child_ids
             for ch in child_ids:
-                subtask_weight = ch.x_studio_weight
-                aot_rate = ch.x_studio_item_actual_progress_aot_
-                plan_rate = ch.x_studio_planned_progress_
+                subtask_weight = ch.mo_wt
+                aot_rate = ch.mo_item_actual_progress_aot
+                plan_rate = ch.mo_planned_progress
                 my_list.append({
                     'subtask_weight': subtask_weight,
                     'aot': aot_rate,
@@ -155,15 +161,15 @@ class ProjectTasksForm(models.Model):
                 plan = round(sum(item['plan'] for item in items), 2)
                 rec.update({
                     'parent_flag': False,
-                    'x_studio_weight': wt,
-                    'x_studio_item_actual_progress_aot_': aot,
-                    'x_studio_planned_progress_': plan
+                    'mo_wt': wt,
+                    'mo_item_actual_progress_aot': aot,
+                    'mo_planned_progress': plan
                 })
             else:
                 rec.parent_show = True
                 rec.write({'parent_flag': True})
 
-    @api.depends('x_studio_weight', 'process_line_ids')
+    @api.depends('mo_wt', 'process_line_ids')
     def _get_progress_widget(self):
         """
         This Function : Calculate The progress Widget
@@ -185,11 +191,11 @@ class ProjectTasksForm(models.Model):
             my_list = []
             plan = []
             if not record.child_ids:
-                record.all_wt_parent = record.x_studio_item_actual_progress_aot_ * 100 if record.x_studio_item_actual_progress_aot_ > 0 else record.x_studio_item_actual_progress_aot_
-                record.all_planned = record.x_studio_planned_progress_ * 100 if record.x_studio_planned_progress_ > 0 else record.x_studio_planned_progress_
+                record.all_wt_parent = record.mo_item_actual_progress_aot * 100 if record.mo_item_actual_progress_aot > 0 else record.mo_item_actual_progress_aot
+                record.all_planned = record.mo_planned_progress * 100 if record.mo_planned_progress > 0 else record.mo_planned_progress
             else:
                 for ch in record.child_ids:
-                    my_list.append(ch.x_studio_item_actual_progress_aot_)
-                    plan.append(ch.x_studio_planned_progress_)
+                    my_list.append(ch.mo_item_actual_progress_aot)
+                    plan.append(ch.mo_planned_progress)
                 record.all_wt_parent = sum(my_list) * 100 if sum(my_list) > 0 else sum(my_list)
                 record.all_planned = sum(plan) * 100 if sum(plan) > 0 else sum(plan)

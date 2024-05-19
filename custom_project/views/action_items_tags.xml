@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="action_items_tags_tree_view" model="ir.ui.view">
+            <field name="name">action.items.tag.tree.view</field>
+            <field name="model">action.items.tags</field>
+            <field name="arch" type="xml">
+             <tree string="Tags" editable="top" sample="1" multi_edit="1" default_order="name">
+                    <field name="name" modifiers="{&quot;required&quot;: true}"/>
+                    <field name="color" widget="color_picker" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_items_tags_act_window" model="ir.actions.act_window">
+            <field name="name">Action Items Tags</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">action.items.tags</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no record click here to add new Action Items Tags.
+                </p>
+            </field>
+        </record>
+        
+        <record id="action_items_stages_tree_view" model="ir.ui.view">
+            <field name="name">action.items.stages.tree.view</field>
+            <field name="model">action.items.stages</field>
+            <field name="arch" type="xml">
+                <tree string="Action Stages" editable="top" sample="1" multi_edit="1" >
+                    <field name="stage_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mo_action_items_stages" model="ir.actions.act_window">
+            <field name="name">Action Items Stages</field>
+            <field name="res_model">action.items.stages</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no record click here to add new Action Items Stages.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Action Items Tags"
+                  id="action_items_tags_menu"
+                  parent="project.menu_project_config"
+                  action="action_items_tags_act_window"
+                  sequence="13"/>
+
+        <menuitem name="Items Stages"
+                  id="mo_action_items_stages_menu_config"
+                  parent="project.menu_projects_config"
+                  action="mo_action_items_stages"
+                  sequence="589"/>
+
+
+    </data>
+</odoo>

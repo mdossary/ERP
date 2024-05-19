@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="project_update_form_inherit" model="ir.ui.view">
+            <field name="name">project.update.form.view</field>
+            <field name="model">project.update</field>
+            <field name="inherit_id" ref="project.project_update_view_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='progress']" position="after">
+                    <field name="project_name" string="Project Name"/>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="attributes">
+                    <attribute name="string">Report  Date</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="end_date" string="End Date" attrs="{}" invisible="1"/>
+                    <field name="report_no" string="Report No."/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='description']" position="attributes">
+                    <attribute name="attrs">{}</attribute>
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page string="Action Items" name="studio_page_l2RQH" attrs="{}" invisible="1">
+                        <group name="studio_group_l2RQH">
+                        </group>
+                    </page>
+                    <page string="Updates" name="updates">
+                        <group name="overall_id" string="OVERALL STATUS">
+                            <field name="overall_status" string="Overall Status"/>
+                        </group>
+                        <group name="group_1_id">
+                            <group name="safety_id" string="Safety">
+                                <field name="safety" string="Safety"/>
+                            </group>
+                            <group name="task_and_activities_id" string="Tasks and Activities">
+                                <field name="task_and_activities" string="Tasks and Activities"/>
+                            </group>
+                        </group>
+                        <group name="group_2_id">
+                            <group name="challenges_id" string="Challenges">
+                                <field name="challenges" string="Challenges"/>
+                            </group>
+                            <group name="any_other_items_id" string="Any Other Items">
+                                <field name="any_other_items" string="Any Other Items"/>
+                            </group>
+                        </group>
+                        <group name="s_curve_id" string="S-Curve">
+                            <field widget="image" name="s_curve" string="S-Curve" options="{&quot;size&quot;:[0,270]}"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

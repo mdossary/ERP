@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="project_task_button_box_wt_form" model="ir.ui.view">
+        <field name="name">project.task.button.box.wt.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" name="action_item_count" type="object" icon="fa-commenting">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="action_count" nolabel="1"/>
+                        </span>
+                        <span class="o_stat_text">
+                            Action Items
+                        </span>
+                    </div>
+                </button>
+
+                <button class="oe_stat_button" name="action_mom" type="object" icon="fa-television">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="mom_count" nolabel="1"/>
+                        </span>
+                        <span class="o_stat_text">
+                            MOM
+                        </span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+    <record id="project_project_button_box_wt_form" model="ir.ui.view">
+        <field name="name">project.project.button.box.wt.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" name="action_item_count" type="object" icon="fa-commenting">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="action_count" nolabel="1"/>
+                        </span>
+                        <span class="o_stat_text">
+                            Action Items
+                        </span>
+                    </div>
+                </button>
+
+                <button class="oe_stat_button" name="action_mom" type="object" icon="fa-television">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="mom_count" nolabel="1"/>
+                        </span>
+                        <span class="o_stat_text">
+                            MOM
+                        </span>
+                    </div>
+                </button>
+
+            </xpath>
+
+            <xpath expr="//form[1]/sheet[1]/div[not(@name)][1]/h1[1]/field[@name='name']" position="after">
+                <field name="project_logo" widget="image" class="oe_avatar ml-3 h4"/>
+            </xpath>
+
+            <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+                <group><field name="company_id"/></group>
+                <field widget="image" options="{&quot;size&quot;: [0, 90]}" name="report_image" string="Company Logo"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page name="techincal" string="Technical">
+                    <group name="tasks" string="Tasks">
+                        <field name="task_ids">
+                            <tree string="Tasks" multi_edit="1" sample="1" js_class="project_task_list" editable="bottom">
+                                <field name="message_needaction" invisible="1" readonly="1"/>
+                                <field name="is_closed" invisible="1"/>
+                                <field name="sequence" invisible="1" readonly="1"/>
+                                <field name="allow_milestones" invisible="1"/>
+                                <field name="priority" widget="priority" optional="show" nolabel="1"/>
+                                <field name="id" optional="hide"/>
+                                <field name="child_text" invisible="1"/>
+                                <field name="allow_subtasks" invisible="1"/>
+                                <field name="name" widget="name_with_subtask_count"/>
+                                <field name="project_id" widget="project_private_task" optional="show" readonly="1" options="{'no_open': 1}"/>
+                                <field name="milestone_id" attrs="{'invisible': [('allow_milestones', '=', False)]}" context="{'default_project_id': project_id}" groups="project.group_project_milestone"/>
+                                <field name="partner_id" optional="hide"/>
+                                <field name="parent_id" optional="hide" attrs="{'invisible': [('allow_subtasks', '=', False)]}" groups="base.group_no_one"/>
+                                <field name="user_ids" optional="show" widget="many2many_avatar_user" domain="[('share', '=', False), ('active', '=', True)]" options="{&quot;no_quick_create&quot;: True}"/>
+                                <field name="company_id" groups="base.group_multi_company" optional="show" readonly="True"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="activity_ids" string="Next Activity" widget="list_activity" optional="show"/>
+                                <field name="date_deadline" optional="hide" widget="remaining_days" attrs="{'invisible': [('is_closed', '=', True)]}"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="show" context="{'project_id': project_id}"/>
+                                <field name="rating_active" invisible="1"/>
+                                <field name="rating_last_text" string="Rating" decoration-danger="rating_last_text == 'ko'" decoration-warning="rating_last_text == 'ok'" decoration-success="rating_last_text == 'top'" attrs="{'invisible': ['|', ('rating_active', '=', False), ('rating_last_text', '=', 'none')]}" class="fw-bold" widget="badge" optional="hide" groups="project.group_project_rating"/>
+                                <field name="legend_normal" invisible="1"/>
+                                <field name="legend_done" invisible="1"/>
+                                <field name="legend_blocked" invisible="1"/>
+                                <field name="kanban_state" widget="state_selection" optional="show" options="{'hide_label': True}" nolabel="1" required="0"/>
+                                <field name="stage_id" invisible="context.get('set_visible',False)" optional="show" readonly="not context.get('default_project_id')"/>
+                                <field name="recurrence_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <br/>
+                    <group name="action_items" string="Action Items">
+                        <field name="action_item_obj">
+                            <tree string="Action Items" editable="bottom">
+                                <field name="seq"/>
+                                <field name="description"/>
+                                <field name="project"/>
+                                <field name="mom"/>
+                                <field name="due_date"/>
+                                <field name="project_task"/>
+                                <field name="action_party" widget="many2many_tags" options="{'color_field':'color'}"/>
+                                <field name="company"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <br/>
+                    <group name="mom" string="MOM">
+                        <field name="mom_obj">
+                            <tree string="MOM" editable="bottom">
+                                <field name="name"/>
+                                <field name="project"/>
+                                <field name="meeting_date"/>
+                                <field name="time"/>
+                                <field name="location"/>
+                                <field name="attendees" widget="many2many_tags"/>
+                                <field name="company"/>
+                            </tree>
+
+                        </field>
+                    </group>
+                    <br/>
+                    <group name="milestone_ids" string="milestone">
+                        <field name="milestone_ids">
+                            <tree decoration-success="can_be_marked_as_done" decoration-danger="is_deadline_exceeded and not can_be_marked_as_done" decoration-muted="is_reached" editable="bottom" sample="1">
+                                <field name="name"/>
+                                <field name="deadline" optional="show"/>
+                                <field name="is_reached" optional="show"/>
+                                <field name="is_deadline_exceeded" invisible="1"/>
+                                <field name="task_count" invisible="1"/>
+                                <field name="can_be_marked_as_done" invisible="1"/>
+                                <button name="action_view_tasks" type="object" title="View Tasks" string="View Tasks" class="btn btn-link float-end" attrs="{'invisible': [('task_count', '=', 0)]}" groups="project.group_project_milestone"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                </page>
+            </xpath>
+
+
+        </field>
+    </record>
+</odoo>

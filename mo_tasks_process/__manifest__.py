@@ -7,7 +7,7 @@
     'version': '16.0.0.2',
     'category': 'Project',
     'author': 'Mohamed Isam',
-    'depends': ['project', 'hr_timesheet','project_enterprise'],
+    'depends': ['project', 'hr_timesheet','project_enterprise','custom_project'],
     'data': [
         'security/ir.model.access.csv',
         'security/security.xml',
