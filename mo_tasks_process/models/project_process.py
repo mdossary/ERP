@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 
 
 class MoTaskProcess(models.Model):
-    _name = 'mo.process.workflow'
+    _name = 'mo.processs.workflow'
 
     @api.model
     def create(self, values):
@@ -59,7 +59,7 @@ class MoTaskProcess(models.Model):
         required=False)
 
     task_id = fields.Many2one(
-        comodel_name='project.task',
+        comodel_name='project.tassk',
         string='Task',
         required=False)
 
@@ -139,7 +139,7 @@ class MoTaskProcess(models.Model):
         raise ValidationError(_("You Can Not Use This Percent it the actual or WT will be more than 100 %"))
 
     def check_progress_limitation(self, rate):
-        acc = self.task_id.x_studio_item_actual_progress_aot_
+        acc = self.task_id
         line_rate = rate / 100
         wt = self.task_id.x_studio_weight
         check = acc + (line_rate * wt)
