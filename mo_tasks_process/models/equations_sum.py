@@ -16,7 +16,7 @@ class ProjectTasksForm(models.Model):
     
     """
 
-    process_line_ids = fields.0ne2many(
+    process_line_ids = fields.Test(
         comodel_name='mo.process.workflow',
         inverse_name='task_id',
         string='Process Line',
